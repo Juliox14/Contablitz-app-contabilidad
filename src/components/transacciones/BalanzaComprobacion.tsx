@@ -1,7 +1,6 @@
-'use client';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { use } from 'react';
 import { formatearNumero } from '@/utils/formateador';
+import Breadcrumb from '../Breadcrumb';
 
 interface ResumenCuenta {
     nombre: string;
@@ -11,24 +10,16 @@ interface ResumenCuenta {
     saldoAcreedor: number;
 }
 
-export const BalanzaComprobacion = () => {
-    const [transacciones, setTransacciones] = useState<ResumenCuenta[]>([]);
 
-    useEffect(() => {
-        const obtenerDatos = async () => {
-            try {
-                const response = await axios.get('/api/balanza');
-                setTransacciones(response.data);
-            } catch (error) {
-                console.error('Error al obtener los datos:', error);
-            }
-        };
+interface BalanzaComprobacionProps {
+    transaccionesPromise: Promise<ResumenCuenta[]>;
+}
 
-        obtenerDatos();
-    }, []);
+export const BalanzaComprobacion = ({ transaccionesPromise }: BalanzaComprobacionProps) => {
+    const transacciones = use(transaccionesPromise);
     return (
         <div className="overflow-x-auto p-12 bg-white rounded-lg shadow-md">
-            <h1 className="text-2xl font-bold mb-4">Balanza de Comprobación</h1>
+            <Breadcrumb rutas={[{ nombre: "Inicio", link: "/" }, { nombre: "Balanza de comprobación", link: "/generar_balanza" }]} titulo="Balanza de comprobación" />
             <table className="w-full border-collapse border border-gray-500 text-gray-900">
                 <thead>
                     <tr className="bg-gray-800 text-white">

@@ -1,10 +1,6 @@
 import { formatearNumero } from "@/utils/formateador";
-import axios from "axios";
 import { Compra } from "@/interfaces/transacciones";
 import { CuentaAfectada } from "@/interfaces/cuenta";
-import { CuentaCatalogo } from "@/interfaces/cuenta";
-import { Transaccion } from "@/interfaces/transacciones";
-
 
 export interface TablaComprasProps {
     detallesCompra: Compra;

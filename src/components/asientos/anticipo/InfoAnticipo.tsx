@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import agregar from "../../public/agregar.png";
-import axios from "axios";
-import Error from "./Error";
+import agregar from "../../../../public/agregar.png";
+import Error from "../../Error";
 import { CuentaAfectada } from "@/interfaces/cuenta";
 import { Compra } from "@/interfaces/transacciones";
 import { CuentaCatalogo } from "@/interfaces/cuenta";
@@ -24,7 +23,6 @@ export const InfoAnticipo = ({
     catalogoCuentas,
     agregarPorcentaje,
 }: InfoVentaProps) => {
-    // Maneja los cambios en los campos de entrada
     const [detallesVenta, setDetallesVenta] = useState<Compra>({
         subtotal: 0,
         iva: 0,

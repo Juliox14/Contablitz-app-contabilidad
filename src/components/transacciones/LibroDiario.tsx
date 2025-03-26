@@ -1,11 +1,7 @@
-'use client';
-
-import { useState, useEffect} from 'react';
-import React from 'react';
-import axios from 'axios';
+import React, { use } from 'react';
 import { formatearNumero } from '@/utils/formateador';
-import Breadcrumb from './Breadcrumb';
-import { obtenerCookieEmpresa } from '@/utils/obtenerCookie';
+import Breadcrumb from '../Breadcrumb';
+
 
 interface MovimientoCuenta {
     nombre: string;
@@ -23,29 +19,12 @@ interface Transaccion_diario {
 }
 
 interface LibroDiarioProps {
-    id_empresa: number;
+    cuentasPromise: Promise<Transaccion_diario[]>;
 }
 
-const LibroDiario = ({id_empresa}: LibroDiarioProps) => {
-    const [transacciones, setTransacciones] = useState<Transaccion_diario[]>([]);
+const LibroDiario = ({cuentasPromise}: LibroDiarioProps) => {
 
-    
-
-    useEffect(() => {
-        const obtenerDatos = async () => {
-            try {
-                const response = await axios.get('/api/empresas/diario', {
-                    params: { id_empresa}
-                });
-                setTransacciones(response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error('Error al obtener los datos:', error);
-            }
-        };
-
-        obtenerDatos();
-    }, []);
+    const transacciones = use(cuentasPromise);
 
     const totalDebe = transacciones.reduce((acc, transaccion) => {
         return acc + transaccion.movimientos_cuentas.reduce((sum, movimiento) => sum + movimiento.debe, 0);

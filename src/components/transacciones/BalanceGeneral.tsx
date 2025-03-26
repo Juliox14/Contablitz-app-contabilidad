@@ -1,10 +1,7 @@
-'use client'
-import { useState, useEffect } from "react";
-import { obtenerCookieEmpresa } from "@/utils/obtenerCookie";
-import axios from "axios";
+import { use } from "react";
 import { formatearNumero } from "@/utils/formateador";
 import { sumaTotal } from "@/utils/sumaTotal";
-import Breadcrumb from "./Breadcrumb";
+import Breadcrumb from "../Breadcrumb";
 
 interface empresa {
     nombre: string;
@@ -18,32 +15,14 @@ interface Cuenta {
     saldo: number;
 }
 
-const BalanceGeneral = () => {
-    const [empresa, setEmpresa] = useState<empresa>({
-        nombre: "",
-        id: 0
-    });
-    const [cuentas, setCuentas] = useState<Cuenta[]>([]);
+interface BalanceGeneralProps {
+    cuentasPromise: Promise<Cuenta[]>;
+}
 
-    useEffect(() => {
-        setEmpresa(obtenerCookieEmpresa() as empresa);
-    }, []);
 
-    useEffect(() => {
-        if (empresa.id !== 0) {  // Solo ejecutar si empresa.id es válido
-            const obtenerCuentas = async () => {
-                try {
-                    const response = await axios.get("/api/empresas/obtenerCuentas", {
-                        params: { id_empresa: empresa.id }
-                    });
-                    setCuentas(response.data);
-                } catch (error) {
-                    console.error("Error al obtener las cuentas:", error);
-                }
-            };
-            obtenerCuentas();
-        }
-    }, [empresa]);
+const BalanceGeneral = ({ cuentasPromise }: BalanceGeneralProps) => {
+
+    const cuentas = use(cuentasPromise);
 
     const activosCirculantes = cuentas.filter((c) => c.tipo === "Activo Circulante");
     const activosNoCirculantes = cuentas.filter((c) => c.tipo === "Activo No Circulante");
@@ -155,7 +134,7 @@ const BalanceGeneral = () => {
 
                 {/* Tabla Capital */}
                 <div className="flex flex-col items-center w-1/3 min-h-full">
-                    <h2 className="text-xl font-bold mb-2">Activos</h2>
+                    <h2 className="text-xl font-bold mb-2">Capital</h2>
                     <table className="w-full border-collapse border border-gray-500 text-gray-900 h-full">
                         <thead>
                             <tr className="bg-gray-800 text-white">

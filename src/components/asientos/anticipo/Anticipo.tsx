@@ -1,20 +1,18 @@
 'use client';
 import { useState, useEffect } from "react";
 import InfoAnticipo from "./InfoAnticipo";
-import TablaCompras from "./TablaCompras";
 import axios from "axios";
 import Image from "next/image";
-import guardar from "../../public/guardar.png";
-import editar from "../../public/editar.png";
+import guardar from "../../../../public/guardar.png";
+import editar from "../../../../public/editar.png";
 import { Compra } from "@/interfaces/transacciones";
 import { CuentaAfectada } from "@/interfaces/cuenta";
-import { CuentaCatalogo } from "@/interfaces/cuenta";
 import { Transaccion } from "@/interfaces/transacciones";
 import { empresa } from "@/interfaces/cuenta";
 import { obtenerCookieEmpresa } from "@/utils/obtenerCookie";
-import Error from "./Error";
-import TablaAnticipo from "./TablaAnticipo";
-import Exito from "./Exito";
+import Error from "../../Error";
+import TablaAnticipo from "../apertura/TablaAnticipo";
+import Exito from "../../Exito";
 
 export const Anticipo = () => {
     const [detallesCompra, setDetallesCompra] = useState<Compra>({

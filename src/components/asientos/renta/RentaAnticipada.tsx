@@ -1,21 +1,21 @@
 'use client';
 import { useState, useEffect } from "react";
-import InfoCompra from "./InfoCompras";
-import TablaCompras from "./TablaCompras";
 import axios from "axios";
 import Image from "next/image";
-import guardar from "../../public/guardar.png";
-import editar from "../../public/editar.png";
+import guardar from "../../../../public/guardar.png";
+import editar from "../../../../public/editar.png";
 import { Compra } from "@/interfaces/transacciones";
 import { CuentaAfectada } from "@/interfaces/cuenta";
-import { CuentaCatalogo } from "@/interfaces/cuenta";
 import { Transaccion } from "@/interfaces/transacciones";
 import { empresa } from "@/interfaces/cuenta";
 import { obtenerCookieEmpresa } from "@/utils/obtenerCookie";
-import Error from "./Error";
-import Exito from "./Exito";
+import Error from "../../Error";
+import TablaAnticipo from "../../asientos/apertura/TablaAnticipo";
+import InfoRentaAnticipada from "./InfoRenta";
+import Exito from "../../Exito";
 
-export const Compras = () => {
+
+export const RentaAnticipada = () => {
     const [detallesCompra, setDetallesCompra] = useState<Compra>({
         subtotal: 0,
         iva: 0,
@@ -28,12 +28,14 @@ export const Compras = () => {
         fecha: "",
         descripcion: "",
     });
-    const [cuentaSeleccionada, setCuentaSeleccionada] = useState<CuentaAfectada>(
-        { id_cuenta_cat: 0, codigo: 0, nombre: "", tipo: "" }
-    );
     const [catalogoCuentas, setCatalogoCuentas] = useState<any[]>([]);
     const [error, setError] = useState<string>("");
     const [exito, setExito] = useState<string>("");
+    const [empresa, setEmpresa] = useState<empresa>({
+        nombre: "",
+        id: 0
+    });
+    const [mesesAnticipo, setMesesAnticipo] = useState<number>(0);
 
     useEffect(() => {
         const obtenerCuentas = async () => {
@@ -49,10 +51,7 @@ export const Compras = () => {
         obtenerCuentas();
     }, []);
 
-    const [empresa, setEmpresa] = useState<empresa>({
-        nombre: "",
-        id: 0
-    });
+
 
     useEffect(() => {
         setEmpresa(obtenerCookieEmpresa() || { nombre: "", id: 0 });
@@ -70,10 +69,6 @@ export const Compras = () => {
         setTransaccion(transaccion);
     }
 
-    const agregarCuentaSeleccionada = (cuenta: CuentaAfectada) => {
-        setCuentaSeleccionada(cuenta);
-    };
-
     // Funcion para editar la compra
     const editarCompra = () => {
         setCuentasAfectadas([]);
@@ -83,18 +78,23 @@ export const Compras = () => {
             total: 0,
         });
         setTransaccion({
-            tipo: "Compra",
+            tipo: "Anticipo de clientes",
             fecha: "",
             descripcion: "",
         });
-        setCuentaSeleccionada({ id_cuenta_cat: 0, codigo: 0, nombre: "", tipo: "", debe: 0, haber: 0 });
+        setMesesAnticipo(0);
     };
+
+    const agregarMesesAnticipo = (meses: number) => {
+        setMesesAnticipo(meses);
+    }
+    
 
     const handleSubmit = async (e: React.FormEvent) => {
         try {
             const response = await axios.post("/api/transacciones/registrarCompra", {
                 detallesCompra,
-                cuentasAfectadas: [...cuentasAfectadas, cuentaSeleccionada],
+                cuentasAfectadas: [...cuentasAfectadas],
                 transaccion,
                 idEmpresa: empresa.id
             });
@@ -107,7 +107,13 @@ export const Compras = () => {
                 setExito("");
                 window.location.reload();
             }, 3000);
+
+            return;
         } catch (error) {
+            setError("Error al registrar la compra");
+            setTimeout(() => {
+                setError("");
+            }, 3000);
             console.error("Error al registrar la compra:", error);
         }
     }
@@ -122,12 +128,12 @@ export const Compras = () => {
             {exito && (
                 <Exito mensaje={exito} />
             )}
-            <InfoCompra
-                agregarDetallesCompra={agregarDetallesCompra}
+            <InfoRentaAnticipada
+                agregarDetallesAnticipo={agregarDetallesCompra}
                 agregarCuentasAfectadas={agregarCuentasAfectadas}
                 agregarTransaccion={agregarTransaccion}
                 catalogoCuentas={catalogoCuentas}
-                agregarCuentaSeleccionada={agregarCuentaSeleccionada}
+                agregarMesesAnticipo={agregarMesesAnticipo}
             />
 
             <div className="relative">
@@ -138,21 +144,20 @@ export const Compras = () => {
                         className=" bg-white border border-gray-200 font-medium px-4 py-2 rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-gray-100"
                     >
                         <Image src={editar.src} alt="editar" width={20} height={20} />
-                        <span className="hidden md:inline-block">Editar compra</span>
+                        <span className="hidden md:inline-block">Editar Anticipo</span>
                     </button>
                     <button
                         className=" bg-white border border-gray-200 font-medium px-4 py-2 rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-gray-100"
                         onClick={handleSubmit}
                     >
                         <Image src={guardar.src} alt="guardar" width={20} height={20} />
-                        <span className="hidden md:inline-block">Guardar compra</span>
+                        <span className="hidden md:inline-block">Guardar Anticipo</span>
                     </button>
                 </div>
 
-                <TablaCompras
+                <TablaAnticipo
                     detallesCompra={detallesCompra}
                     cuentasAfectadas={cuentasAfectadas}
-                    cuentaSeleccionada={cuentaSeleccionada}
                 />
             </div>
 
@@ -160,4 +165,4 @@ export const Compras = () => {
     );
 };
 
-export default Compras;
+export default RentaAnticipada;

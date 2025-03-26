@@ -1,4 +1,4 @@
-import AsientoApertura from "@/components/AsientoApertura";
+import AsientoApertura from "@/components/asientos/apertura/AsientoApertura";
 
 export default function AsientoAperturaPage() {
     return (

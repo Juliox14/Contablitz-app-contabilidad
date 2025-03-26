@@ -1,5 +1,4 @@
 import Image from "next/image";
-import cuentas from "../../public/cuentas.png";
 import documento from "../../public/documento.png";
 import libro from "../../public/libro.png";
 import balanza from "../../public/balanza.png";

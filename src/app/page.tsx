@@ -1,10 +1,22 @@
 import Link from "next/link";
+import Image from "next/image";
+import contablitz from "../../public/contablitz.png"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-6 py-12">
+    <main className="min-h-screen bg-gray-50 flex flex-col items-center px-6 py-12">
       {/* Contenedor principal */}
+
+
+      <Image
+        src={contablitz.src}
+        alt="Vista previa de Contablitz"
+        className=" mx-auto w-full max-w-lg"
+        width={400}
+        height={200}
+      />
       <div className="max-w-3xl text-center">
+
         {/* Logo y título */}
         <h1 className="text-4xl font-bold text-gray-900">
           Bienvenido a <span className="text-[#4FAB5F]">Contablitz</span>
@@ -15,13 +27,7 @@ export default function Home() {
         </p>
 
         {/* Imagen ilustrativa */}
-        {/* <div className="mt-8">
-                    <img 
-                        src="/images/dashboard-preview.png" 
-                        alt="Vista previa de Contablitz"
-                        className="rounded-lg shadow-md mx-auto w-full max-w-lg"
-                    />
-                </div> */}
+
 
         {/* Botones de acción */}
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">

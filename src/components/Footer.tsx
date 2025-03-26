@@ -21,7 +21,7 @@ export const Footer = () => {
 
                     {/* Sección Copyright */}
                     <div className="text-center md:text-right">
-                        <p>© 2024 Julián Antonio Castro Alonso</p>
+                        <p>© 2025 Julián Antonio Castro Alonso</p>
                     </div>
                 </div>
             </footer>

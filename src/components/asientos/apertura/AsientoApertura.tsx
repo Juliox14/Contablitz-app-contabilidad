@@ -2,11 +2,11 @@
 import { useState, useEffect } from "react";
 import InfoAsiento from "./InformacionAsiento";
 import Image from "next/image";
-import guardar from "../../public/guardar.png";
+import guardar from "../../../../public/guardar.png";
 import { obtenerCookieEmpresa } from "@/utils/obtenerCookie";
 import { formatearNumero } from "@/utils/formateador";
-import Error from "./Error";
-import Exito from "./Exito";
+import Error from "../../Error";
+import Exito from "../../Exito";
 import axios from "axios";
 
 interface Cuenta {

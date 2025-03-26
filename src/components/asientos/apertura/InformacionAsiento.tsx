@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import agregar from "../../public/agregar.png";
+import agregar from "../../../../public/agregar.png";
 import axios from "axios";
 
 interface Cuenta {

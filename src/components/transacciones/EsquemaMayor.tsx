@@ -1,8 +1,7 @@
 'use client';
-
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { use } from 'react';
 import { formatearNumero } from '@/utils/formateador';
+import Breadcrumb from '@/components/Breadcrumb';
 
 interface MovimientoCuenta {
     numero_transaccion: number;
@@ -16,25 +15,17 @@ interface CuentaMayor {
     movimientos: MovimientoCuenta[];
 }
 
-const EsquemaMayor = () => {
-    const [cuentas, setCuentas] = useState<CuentaMayor[]>([]);
+interface EsquemaMayorProps {
+    cuentasPromise: Promise<CuentaMayor[]>;
+}
 
-    useEffect(() => {
-        const obtenerDatos = async () => {
-            try {
-                const response = await axios.get('/api/mayor');
-                setCuentas(response.data);
-            } catch (error) {
-                console.error('Error al obtener los datos:', error);
-            }
-        };
-
-        obtenerDatos();
-    }, []);
+const EsquemaMayor = ({ cuentasPromise }: EsquemaMayorProps) => {
+    const cuentas = use(cuentasPromise);
 
     return (
         <div className="w-full flex flex-col items-center p-6">
-            <h2 className="text-lg font-bold mb-4">Esquema de Mayor</h2>
+            <Breadcrumb rutas={[{ nombre: "Inicio", link: "/" }, { nombre: "Esquemas de mayor", link: "/mayor" }]} titulo="Esquemas de mayor" />
+
             {cuentas.map((cuenta, index) => {
                 const totalDebe = cuenta.movimientos.reduce((acc, mov) => acc + mov.debe, 0);
                 const totalHaber = cuenta.movimientos.reduce((acc, mov) => acc + mov.haber, 0);
