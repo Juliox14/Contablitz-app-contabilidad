@@ -6,6 +6,7 @@ import { CuentaAfectada } from "@/interfaces/cuenta";
 import { Compra } from "@/interfaces/transacciones";
 import { CuentaCatalogo } from "@/interfaces/cuenta";
 import { Transaccion } from "@/interfaces/transacciones";
+import { formatearNumero } from "@/utils/formateador";
 
 
 interface InfoCompraProps {
@@ -63,6 +64,7 @@ export const InfoCompra = ({
     const [tipoPago, setTipoPago] = useState<string>("efectivo");
     const cuentasEfectivo = catalogoCuentas.filter((cuenta) => cuenta.nombre === "Caja" || cuenta.nombre === "Bancos");
     const cuentasCredito = catalogoCuentas.filter((cuenta) => cuenta.nombre === "Acreedores a corto plazo" || cuenta.nombre === "Acreedores a largo plazo");
+    const cuentaCompras = catalogoCuentas.find((cuenta) => cuenta.nombre === "Compras");
     const [ivaAcreditado, setIvaAcreditado] = useState<CuentaAfectada>({
         id_cuenta_cat: 0,
         codigo: 0,
@@ -79,9 +81,14 @@ export const InfoCompra = ({
         haber: 0,
         tipo: "",
     });
-    const [porcentajeEfectivo, setPorcentajeEfectivo] = useState<any>(Number(50));
-    const [porcentajeCredito, setPorcentajeCredito] = useState<any>(Number(50));
-
+    const [porcentajeEfectivo, setPorcentajeEfectivo] = useState<number>(Number(50));
+    const [porcentajeCredito, setPorcentajeCredito] = useState<number>(Number(50));
+    const cuentaDescuentoSobreCompras = catalogoCuentas.find((cuenta) => cuenta.nombre === "Descuentos sobre compras");
+    const cuentaRebajaSobreCompras = catalogoCuentas.find((cuenta) => cuenta.nombre === "Rebajas sobre compras");
+    const cuentaDevolucionSobreCompras = catalogoCuentas.find((cuenta) => cuenta.nombre === "Devoluciones sobre compras");
+    const [descuento, setDescuento] = useState<number>(0);
+    const [rebaja, setRebaja] = useState<number>(0);
+    const [devolucion, setDevolucion] = useState<number>(0);
 
 
     const handlePorcentajeEfectivoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -230,9 +237,7 @@ export const InfoCompra = ({
         });
     };
 
-    const formatNumberWithCommas = (num: number) => {
-        return num.toLocaleString();
-    };
+
 
 
     useEffect(() => {
@@ -256,9 +261,9 @@ export const InfoCompra = ({
             haber: detallesCompra.total * (porcentajeCredito / 100),
         });
         agregarCuentadeIva();
-    
+
     }, [detallesCompra, porcentajeEfectivo, porcentajeCredito]);  // Usa variables explícitas como dependencias
-    
+
 
 
 
@@ -316,26 +321,150 @@ export const InfoCompra = ({
     };
 
 
-
+    const handleDescuentoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDescuento(parseFloat(e.target.value));
+    }
 
 
     const handleAgregarCompra = () => {
         if (!validarCampos()) {
             return;
         }
+
+        const cuentas: CuentaAfectada[] = [];
+
         agregarDetallesCompra(detallesCompra);
+
+        
         if (tipoPago === "efectivo") {
-            agregarCuentasAfectadas([cuentaAfectada, ivaAcreditado]);
+            
+            cuentas.push(cuentaAfectada)
+            cuentas.push(ivaAcreditado);
+            if (descuento > 0) {
+                const nuevaCuentaSeleccionada: CuentaAfectada = {
+                    id_cuenta_cat: cuentaCompras?.id_cuenta_cat || 0,
+                    codigo: cuentaCompras?.codigo || 0,
+                    nombre: cuentaCompras?.nombre || "",
+                    debe: detallesCompra.subtotal,
+                    haber: 0,
+                    tipo: cuentaCompras?.tipo || "",
+                };
+
+                const nuevoDetallesCuentaDescuentoSobreCompras: CuentaAfectada = {
+                    id_cuenta_cat: cuentaDescuentoSobreCompras?.id_cuenta_cat || 0,
+                    codigo: cuentaDescuentoSobreCompras?.codigo || 0,
+                    nombre: cuentaDescuentoSobreCompras?.nombre || "",
+                    debe: 0,
+                    haber: ((detallesCompra.subtotal * (descuento / 100)) / 1.16),
+                    tipo: cuentaDescuentoSobreCompras?.tipo || "",
+                };
+
+                const nuevoIvaAcreditado: CuentaAfectada = {
+                    id_cuenta_cat: ivaAcreditado.id_cuenta_cat,
+                    codigo: ivaAcreditado.codigo,
+                    nombre: ivaAcreditado.nombre,
+                    debe: 0,
+                    haber: (((detallesCompra.subtotal * (descuento / 100)) / 1.16) * 0.16),
+                    tipo: ivaAcreditado.tipo,
+                };
+
+                const nuevaCuentaAfectada: CuentaAfectada = {
+                    id_cuenta_cat: cuentaAfectada.id_cuenta_cat,
+                    codigo: cuentaAfectada.codigo,
+                    nombre: cuentaAfectada.nombre,
+                    debe: detallesCompra.subtotal * (descuento / 100),
+                    haber: 0,
+                    tipo: cuentaAfectada.tipo,
+                };
+
+                agregarCuentaSeleccionada({ ...nuevaCuentaSeleccionada });
+                cuentas.push(nuevaCuentaAfectada);
+                cuentas.push(nuevoDetallesCuentaDescuentoSobreCompras);
+                cuentas.push(nuevoIvaAcreditado);
+
+            }
+            if (rebaja > 0) {
+               const nuevaCuentaRebajaSobreCompras: CuentaAfectada = {
+                    id_cuenta_cat: cuentaRebajaSobreCompras?.id_cuenta_cat || 0,
+                    codigo: cuentaRebajaSobreCompras?.codigo || 0,
+                    nombre: cuentaRebajaSobreCompras?.nombre || "",
+                    debe: 0,
+                    haber: rebaja / 1.16,
+                    tipo: cuentaRebajaSobreCompras?.tipo || "",
+                };
+
+                const nuevoIvaAcreditado: CuentaAfectada = {
+                    id_cuenta_cat: ivaAcreditado.id_cuenta_cat,
+                    codigo: ivaAcreditado.codigo,
+                    nombre: ivaAcreditado.nombre,
+                    debe: 0,
+                    haber: (rebaja / 1.16) * 0.16,
+                    tipo: ivaAcreditado.tipo,
+                };
+
+                const nuevaCuentaAfectada: CuentaAfectada = {
+                    id_cuenta_cat: cuentaAfectada.id_cuenta_cat,
+                    codigo: cuentaAfectada.codigo,
+                    nombre: cuentaAfectada.nombre,
+                    debe: rebaja,
+                    haber: 0,
+                    tipo: cuentaAfectada.tipo,
+                };
+
+                cuentas.push(nuevaCuentaAfectada);
+                cuentas.push(nuevaCuentaRebajaSobreCompras);
+                cuentas.push(nuevoIvaAcreditado);
+            }
+            if (devolucion > 0) {
+
+                const nuevaCuentaDevolucionSobreCompras: CuentaAfectada = {
+                    id_cuenta_cat: cuentaDevolucionSobreCompras?.id_cuenta_cat || 0,
+                    codigo: cuentaDevolucionSobreCompras?.codigo || 0,
+                    nombre: cuentaDevolucionSobreCompras?.nombre || "",
+                    debe: 0,
+                    haber: devolucion / 1.16,
+                    tipo: cuentaDevolucionSobreCompras?.tipo || "",
+                };
+
+
+                const nuevoIvaAcreditado: CuentaAfectada = {
+                    id_cuenta_cat: ivaAcreditado.id_cuenta_cat,
+                    codigo: ivaAcreditado.codigo,
+                    nombre: ivaAcreditado.nombre,
+                    debe: 0,
+                    haber: (devolucion / 1.16) * 0.16,
+                    tipo: ivaAcreditado.tipo,
+                };
+
+                const nuevaCuentaAfectada: CuentaAfectada = {
+                    id_cuenta_cat: cuentaAfectada.id_cuenta_cat,
+                    codigo: cuentaAfectada.codigo,
+                    nombre: cuentaAfectada.nombre,
+                    debe: devolucion,
+                    haber: 0,
+                    tipo: cuentaAfectada.tipo,
+                };
+
+                cuentas.push(nuevaCuentaAfectada);
+                cuentas.push(nuevaCuentaDevolucionSobreCompras);
+                cuentas.push(nuevoIvaAcreditado);
+
+            } 
+            agregarCuentasAfectadas(cuentas);
+            agregarCuentaSeleccionada({ ...cuentaSeleccionada, debe: detallesCompra.subtotal, haber: 0 });
         }
         if (tipoPago === "credito") {
             agregarCuentasAfectadas([cuentaAfectada, ivaPorAcreditar]);
+            agregarCuentaSeleccionada({ ...cuentaSeleccionada, debe: detallesCompra.subtotal, haber: 0 });
+
         }
         if (tipoPago === "combinada") {
             agregarCuentasAfectadas([cuentaAfectadaEfectivo, cuentaAfectadaCredito, ivaAcreditado, ivaPorAcreditar]);
+            agregarCuentaSeleccionada({ ...cuentaSeleccionada, debe: detallesCompra.subtotal, haber: 0 });
+
         }
         agregarTransaccion(transaccion);
 
-        agregarCuentaSeleccionada({ ...cuentaSeleccionada, debe: detallesCompra.subtotal, haber: 0 });
     }
 
     const validarCampos = () => {
@@ -399,13 +528,13 @@ export const InfoCompra = ({
                                 </option>
                             ))}
                         </select>
-                        {/* No ves la cuenta que buscas, añade una */}
+                        {/* No ves la cuenta que buscas, añade una
                         <button
                             className="text-blue-600 hover:underline w-40 text-xs cursor-pointer"
                             onClick={() => alert("Añadir cuenta")}
                         >
                             ¿No ves la cuenta que buscas?
-                        </button>
+                        </button> */}
                     </div>
 
                     <div className="max-w-sm flex items-center gap-2">
@@ -497,7 +626,7 @@ export const InfoCompra = ({
                         <input
                             type="text"
                             name="total"
-                            value={formatNumberWithCommas(detallesCompra.total)} // Formatear con comas
+                            value={detallesCompra.total} // Formatear con comas
                             onChange={handleTotalChange}
                             className="px-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                         />
@@ -509,7 +638,7 @@ export const InfoCompra = ({
                         <input
                             type="text"
                             name="subtotal"
-                            value={formatNumberWithCommas(detallesCompra.subtotal)} // Formatear con comas
+                            value={detallesCompra.subtotal} // Formatear con comas
                             onChange={handleSubtotalChange}
                             className="px-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                         />
@@ -521,11 +650,51 @@ export const InfoCompra = ({
                         <input
                             type="text"
                             name="iva"
-                            value={formatNumberWithCommas(detallesCompra.iva)} // Formatear con comas
+                            value={detallesCompra.iva} // Formatear con comas
                             onChange={handleIvaChange}
                             className="px-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                         />
                     </div>
+
+                    {tipoPago === "efectivo" && (
+                        <div className="flex gap-4 items-center">
+
+                            <div className="max-w-sm flex items-center gap-2">
+                                <label htmlFor="descuento">Descuento (%): </label>
+                                <input
+                                    type="number"
+                                    name="descuento"
+                                    value={descuento} // Formatear con comas
+                                    onChange={handleDescuentoChange}
+                                    className="px-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                />
+                            </div>
+
+                            <div className="max-w-sm flex items-center gap-2">
+                                <label htmlFor="descuento">Rebaja (IVA incluido): </label>
+                                <input
+                                    type="number"
+                                    name="rebaja"
+                                    value={rebaja} // Formatear con comas
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRebaja(parseFloat(e.target.value))}
+                                    className="px-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                />
+                            </div>
+
+                            <div className="max-w-sm flex items-center gap-2">
+                                <label htmlFor="descuento">Devolución (IVA incluido): </label>
+                                <input
+                                    type="number"
+                                    name="devolucion"
+                                    value={devolucion} // Formatear con comas
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDevolucion(parseFloat(e.target.value))}
+                                    className="px-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                />
+                            </div>
+
+
+                        </div>
+                    )}
 
 
                     <button

@@ -1,5 +1,5 @@
 
-import LibroDiarioFallback from "@/components/fallbacks/LibroDiario";
+import LibroDiarioFallback from "@/components/transacciones/fallbacks/LibroDiario";
 import LibroDiario from "@/components/transacciones/LibroDiario";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
@@ -8,10 +8,10 @@ interface Empresa {
     id: number;
 }
 
-const GenerarLibroDiario = () => {
+const GenerarLibroDiario = async () => {
     // Obtén las cookies (no es necesario usar await)
     const cookiesList = cookies() as any;
-    const empresaGuardada = cookiesList.get('empresaSeleccionada')?.value;
+    const empresaGuardada = await cookiesList.get('empresaSeleccionada')?.value;
 
     console.log("Cookie empresaSeleccionada:", empresaGuardada);
 

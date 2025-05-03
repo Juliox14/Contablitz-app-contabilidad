@@ -1,4 +1,4 @@
-import RentaAnticipada from "@/components/RentaAnticipada";
+import RentaAnticipada from "@/components/asientos/renta/RentaAnticipada";
 
 export default function AsientoPagoRenta() {
     return (

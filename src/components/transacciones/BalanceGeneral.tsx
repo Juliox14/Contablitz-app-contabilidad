@@ -2,6 +2,7 @@ import { use } from "react";
 import { formatearNumero } from "@/utils/formateador";
 import { sumaTotal } from "@/utils/sumaTotal";
 import Breadcrumb from "../Breadcrumb";
+import ErrorCuentas from "./fallbacks/ErrorCuentas";
 
 interface empresa {
     nombre: string;
@@ -24,10 +25,14 @@ const BalanceGeneral = ({ cuentasPromise }: BalanceGeneralProps) => {
 
     const cuentas = use(cuentasPromise);
 
+    if (!cuentas || cuentas.length === 0) {
+        return <ErrorCuentas />;
+    }
+
     const activosCirculantes = cuentas.filter((c) => c.tipo === "Activo Circulante");
     const activosNoCirculantes = cuentas.filter((c) => c.tipo === "Activo No Circulante");
     const pasivos = cuentas.filter((c) => c.tipo === "Pasivo" || c.tipo === "Pasivo Largo Plazo" || c.tipo === "Pasivo Corto Plazo");
-    const capital = cuentas.filter((c) => c.tipo === "Capital Contable");
+    const capital = cuentas.filter((c) => c.tipo === "Capital");
 
     console.log("Activos Circulantes", activosCirculantes);
     console.log("Activos No Circulantes", activosNoCirculantes);

@@ -1,6 +1,7 @@
 import { use } from 'react';
 import { formatearNumero } from '@/utils/formateador';
 import Breadcrumb from '../Breadcrumb';
+import ErrorCuentas from './fallbacks/ErrorCuentas';
 
 interface ResumenCuenta {
     nombre: string;
@@ -17,6 +18,9 @@ interface BalanzaComprobacionProps {
 
 export const BalanzaComprobacion = ({ transaccionesPromise }: BalanzaComprobacionProps) => {
     const transacciones = use(transaccionesPromise);
+    if (!transacciones || transacciones.length === 0) {
+        return <ErrorCuentas />;
+    }
     return (
         <div className="overflow-x-auto p-12 bg-white rounded-lg shadow-md">
             <Breadcrumb rutas={[{ nombre: "Inicio", link: "/" }, { nombre: "Balanza de comprobación", link: "/generar_balanza" }]} titulo="Balanza de comprobación" />

@@ -1,0 +1,209 @@
+1. INTRODUCCIÓN A LA CONTABILIDAD Y LAS NIF
+La contabilidad busca ofrecer información financiera útil y oportuna para la toma de decisiones. Esta información debe ser confiable y estandarizada, lo cual se logra mediante las Normas de Información Financiera (NIF), que sustituyen a los antiguos Principios de Contabilidad Generalmente Aceptados (PCGA) en México.
+
+Las NIF son emitidas por el Consejo Mexicano de Normas de Información Financiera (CINIF).
+
+2. USUARIOS DE LA INFORMACIÓN FINANCIERA
+a. Usuarios Externos
+Toman decisiones sobre la entidad:
+
+Inversionistas
+
+Bancos
+
+Gobierno
+
+Clientes
+
+Proveedores
+
+b. Usuarios Internos
+Toman decisiones para la entidad:
+
+Directivos
+
+Gerentes
+
+Jefes de departamento
+
+Ambos tipos de usuarios se basan en los estados financieros para sus decisiones.
+
+3. ESTRUCTURA DE LAS NIF (SERIE A)
+NIF A-1: Estructura de las NIF
+Define las NIF como conjunto de normas conceptuales y particulares.
+
+Introduce:
+
+Reconocimiento contable
+
+Juicio profesional
+
+Criterio prudencial
+
+4. POSTULADOS BÁSICOS (NIF A-2)
+Son supuestos fundamentales para elaborar y aplicar la información financiera:
+
+Sustancia económica: Lo importante es el fondo económico, no la forma legal.
+
+Entidad económica: Las operaciones pertenecen exclusivamente a la entidad.
+
+Negocio en marcha: Se asume que seguirá operando indefinidamente.
+
+Devengación contable: Se registra cuando nace el derecho u obligación, no cuando se paga o cobra.
+
+Periodo contable: La vida económica se divide en periodos iguales para comparar.
+
+Asociación de costos y gastos con ingresos: Relacionar gastos con los ingresos generados.
+
+Valuación: Todo se registra en términos monetarios.
+
+Dualidad económica: Toda transacción afecta al menos dos cuentas.
+
+Consistencia: Las operaciones similares deben tener el mismo tratamiento contable en el tiempo.
+
+5. OBJETIVOS DE LOS ESTADOS FINANCIEROS (NIF A-3)
+a. Tipos de entidades:
+Lucrativas: Buscan utilidad.
+
+No lucrativas: No reparten utilidades.
+
+b. Necesidades comunes de los usuarios:
+Evaluar: rentabilidad, solvencia, liquidez, eficiencia y riesgo financiero.
+
+c. Información que deben proporcionar los estados financieros:
+Situación financiera
+
+Actividad operativa
+
+Flujos de efectivo o cambios en la situación financiera
+
+Políticas contables y viabilidad
+
+6. ESTADOS FINANCIEROS BÁSICOS (NIF A-3)
+Balance general / Estado de situación financiera:
+
+Muestra activos, pasivos y capital.
+
+Estado de resultados:
+
+Presenta ingresos, costos, gastos y utilidad o pérdida neta.
+
+Estado de variaciones en el capital contable:
+
+Cambios en el capital contribuido y ganado.
+
+Estado de flujos de efectivo / Cambios en la situación financiera:
+
+Muestra el origen y aplicación de los recursos financieros.
+
+7. CARACTERÍSTICAS CUALITATIVAS DE LA INFORMACIÓN FINANCIERA (NIF A-4)
+Características primarias:
+Confiabilidad: Veraz, verificable y objetiva.
+
+Relevancia: Influyente en decisiones.
+
+Comprensibilidad: Clara para usuarios con conocimiento básico.
+
+Comparabilidad: Analizable entre periodos o entidades.
+
+Restricciones:
+Oportunidad: Debe presentarse a tiempo.
+
+Relación costo-beneficio
+
+Equilibrio entre características cualitativas
+
+8. ELEMENTOS DE LOS ESTADOS FINANCIEROS (NIF A-5)
+a. Activos:
+Recursos controlados que generarán beneficios futuros.
+
+Clasificados como efectivo, derechos, bienes disponibles o en uso, inversiones, etc.
+
+b. Pasivos:
+Obligaciones presentes que generarán salidas de recursos.
+
+Clasificados en obligaciones de entregar efectivo, bienes, servicios o instrumentos financieros.
+
+c. Capital contable:
+Diferencia entre activos y pasivos.
+
+Tipos: capital contribuido y capital ganado.
+
+d. Ingresos:
+Incremento de activos o disminución de pasivos.
+
+Ordinarios y no ordinarios.
+
+e. Costos y gastos:
+Disminuyen los activos o aumentan pasivos.
+
+f. Utilidad o pérdida:
+Ingresos menos costos y gastos.
+
+9. RECONOCIMIENTO Y VALUACIÓN (NIF A-6)
+a. Reconocimiento contable:
+Inicial: Primera vez que se registra una partida.
+
+Posterior: Ajustes por eventos posteriores.
+
+b. Criterios para reconocer:
+Provenir de una transacción.
+
+Ser elemento del estado financiero.
+
+Cuantificable monetariamente.
+
+Con soporte económico.
+
+Afectar económicamente en el futuro.
+
+c. Valuación:
+Se realiza en valores de entrada (adquisición, reposición, reemplazo) y valores de salida (realización, valor neto de liquidación, valor presente, valor razonable).
+
+10. PRESENTACIÓN Y REVELACIÓN (NIF A-7)
+a. Responsabilidad:
+La administración es responsable de revelar información veraz.
+
+b. Notas a los estados financieros deben incluir:
+Declaración de uso de NIF
+
+Actividad principal
+
+Políticas contables
+
+Fecha de emisión
+
+Autorización
+
+Revelaciones adicionales (contingencias, riesgos, controladoras, etc.)
+
+c. Presentación:
+Debe clasificarse en corto y largo plazo.
+
+Informes deben ser anuales, aunque pueden haber intermedios.
+
+11. SUPLETORIEDAD (NIF A-8)
+a. Definición:
+Uso de normas internacionales (NIIF/IFRS) en ausencia de una NIF mexicana aplicable.
+
+b. Requisitos:
+Vigencia
+
+No contradecir el marco conceptual de NIF
+
+Emitidas por organismos reconocidos
+
+Sustento teórico
+
+c. Reglas:
+Aplicar solo cuando no exista norma mexicana.
+
+Revelar en notas cuando se use supletoriedad.
+
+Dejar de aplicarse cuando exista norma nacional específica.
+
+12. CONCLUSIÓN GENERAL
+La estructura normativa de las NIF en México se basa en un marco conceptual sólido que establece cómo se debe reconocer, presentar, valorar y revelar la información financiera, todo con el fin de asegurar la utilidad, veracidad y relevancia para la toma de decisiones de los usuarios.
+
+Cada sección de la Serie A de las NIF cumple una función clave y se aplica a todo tipo de entidades que emitan estados financieros.
+

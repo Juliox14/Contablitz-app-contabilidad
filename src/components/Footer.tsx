@@ -1,6 +1,6 @@
 export const Footer = () => {
     return (
-            <footer className="bg-black text-white py-6 w-full">
+            <footer className="bg-black text-white py-6 h-32 w-full">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
                     
                     {/* Sección "Hecho con" */}

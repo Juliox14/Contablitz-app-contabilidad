@@ -57,8 +57,7 @@ export const Anticipo = () => {
 
     useEffect(() => {
         setEmpresa(obtenerCookieEmpresa() || { nombre: "", id: 0 });
-    }
-        , []);
+    }, []);
 
     const agregarDetallesCompra = (nuevaCompra: Compra) => {
         setDetallesCompra({ ...detallesCompra, ...nuevaCompra });
@@ -95,7 +94,7 @@ export const Anticipo = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         try {
-            const response = await axios.post("/api/transacciones/registrarCompra", {
+            const response = await axios.post("/api/transacciones/registrarOperacion", {
                 detallesCompra,
                 cuentasAfectadas: [...cuentasAfectadas],
                 transaccion,

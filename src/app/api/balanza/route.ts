@@ -23,7 +23,16 @@ interface ResumenCuenta {
 
 export async function GET(req: Request, res: Response) {
     try {
-        const response = await fetch('http://localhost:3000/api/mayor');
+
+        const { searchParams } = new URL(req.url);
+        const id_empresa = searchParams.get("id_empresa");
+        const response = await fetch(`http://localhost:3000/api/mayor?id_empresa=${id_empresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+);
         if (!response.ok) {
             throw new Error('Error al obtener las cuentas de la empresa');
         }

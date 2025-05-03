@@ -6,12 +6,12 @@ import ajustes from "../../public/ajustes.png";
 import info from "../../public/info.png";
 import AboutMe from "./AboutMe";
 import { obtenerCookieEmpresa } from "@/utils/obtenerCookie";
-import { empresa } from "@/interfaces/cuenta";
+import { Empresa } from "@/interfaces/cuenta";
 
 
 export const Header = () => {
     const [openAbout, setOpenAbout] = useState(false);
-    const [empresa, setEmpresa] = useState<empresa>({
+    const [empresa, setEmpresa] = useState<Empresa>({
         nombre: "",
         id: 0
     });
@@ -28,7 +28,7 @@ export const Header = () => {
                 <header className="bg-[#F5F5F5] p-4 w-full h-16 flex items-center gap-4 justify-between">
                     <div className="flex items-center gap-2">
                         <Image src={logo.src} alt="Logo" className="h-12" width={48} height={48} />
-                        <h1 className="text-xl font-bold text-slate-800">{empresa?.nombre}</h1>
+                        <h1 className="text-xl font-bold text-slate-800">{empresa?.nombre || "Neuronix S.A de C.V"}</h1>
                     </div>
 
                     <div className="flex">

@@ -1,4 +1,4 @@
-import Compras from "@/components/Compras";
+import Compras from "@/components/asientos/compras/Compras";
 
 export default function AsientoCompra() {
     return (

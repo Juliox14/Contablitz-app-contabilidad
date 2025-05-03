@@ -2,6 +2,7 @@
 import { use } from 'react';
 import { formatearNumero } from '@/utils/formateador';
 import Breadcrumb from '@/components/Breadcrumb';
+import ErrorCuentas from './fallbacks/ErrorCuentas';
 
 interface MovimientoCuenta {
     numero_transaccion: number;
@@ -21,6 +22,10 @@ interface EsquemaMayorProps {
 
 const EsquemaMayor = ({ cuentasPromise }: EsquemaMayorProps) => {
     const cuentas = use(cuentasPromise);
+
+    if (!cuentas || cuentas.length === 0) {
+        return <ErrorCuentas />;
+    }
 
     return (
         <div className="w-full flex flex-col items-center p-6">

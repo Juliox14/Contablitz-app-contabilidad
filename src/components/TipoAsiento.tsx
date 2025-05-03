@@ -24,8 +24,11 @@ const TipoAsiento = () => {
                 <option value="" disabled>Selecciona un tipo</option>
                 <option value="asiento_apertura">Asiento de apertura</option>
                 <option value="asiento_compra">Compra</option>
+                <option value="asiento_venta">Venta</option>
                 <option value="asiento_anticipo_clientes">Anticipo de clientes</option>
                 <option value="asiento_pago_renta">Pago de rentas por anticipado</option>
+                <option value="asiento_traspaso">Traspaso para abrir sucursal </option>
+
             </select>
         </div>
     );

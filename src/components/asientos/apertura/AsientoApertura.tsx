@@ -62,7 +62,7 @@ const AsientoApertura = () => {
 
     const activosCirculantes = cuentas.filter(cuenta => cuenta.tipo === "Activo Circulante");
     const activosNoCirculantes = cuentas.filter(cuenta => cuenta.tipo === "Activo No Circulante");
-    const capital = cuentas.filter(cuenta => cuenta.tipo === "Capital Contable");
+    const capital = cuentas.filter(cuenta => cuenta.tipo === "Capital");
 
     const totalActivosCirculantes = activosCirculantes.reduce((total, cuenta) => Number(total) + Number(cuenta.debe), 0);
     const totalActivosNoCirculantes = activosNoCirculantes.reduce((total, cuenta) => Number(total) + Number(cuenta.debe), 0);
@@ -119,7 +119,6 @@ const AsientoApertura = () => {
             <InfoAsiento
                 fecha={fecha}
                 setFecha={setFecha}
-                tipoAsiento={tipoAsiento}
                 agregarCuenta={agregarCuenta}
                 cuentaEditando={cuentaEditando}
                 actualizarCuenta={actualizarCuenta}

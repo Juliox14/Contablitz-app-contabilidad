@@ -24,7 +24,6 @@ interface CuentaCatalogo {
 }
 
 interface InfoAsientoProps {
-    tipoAsiento: string;
     fecha: string;
     setFecha: (fecha: string) => void;
     agregarCuenta: (cuenta: Cuenta) => void;
@@ -35,7 +34,6 @@ interface InfoAsientoProps {
 }
 
 const InfoAsiento = ({
-    tipoAsiento,
     fecha,
     setFecha,
     agregarCuenta,
@@ -48,6 +46,7 @@ const InfoAsiento = ({
         cuentaEditando || { id: 0, codigo: 0, nombre: "", debe: 0, haber: 0, tipo: "" }
     );
     const [cuentaSeleccionada, setCuentaSeleccionada] = useState<boolean>(false);
+    const [traspasoSucursal, setTraspasoSucursal] = useState<boolean>(false);
 
     useEffect(() => {
         if (cuentaEditando) {
@@ -117,11 +116,7 @@ const InfoAsiento = ({
         setDescripcion(e.target.value);
     };
 
-    // Función para formatear el número con comas
-    const formatNumberWithCommas = (num: string) => {
-        if (!num) return '';
-        return Number(num).toLocaleString();
-    };
+    
 
     return (
         <div className="flex justify-between bg-[#F5F5F5] flex-col">
@@ -148,6 +143,17 @@ const InfoAsiento = ({
                                 className="px-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                             />
                         </div>
+
+                        <div className="max-w-sm flex items-center gap-2">
+                            <label htmlFor="fecha">¿Traspaso para abrir sucursal?: </label>
+                            <input
+                            type="checkbox"
+                            name="traspaso"
+                            checked={traspasoSucursal}
+                            onChange={(e) => setTraspasoSucursal(e.target.checked)}
+                        />
+                        </div>
+                        
                     </div>
                     <div className="flex gap-4">
                         <div className="max-w-sm flex items-center gap-2 ">
@@ -170,9 +176,9 @@ const InfoAsiento = ({
                         <div className="max-w-sm flex items-center gap-2">
                             <label htmlFor="debe">Debe: </label>
                             <input
-                                type="text"
+                                type="number"
                                 name="debe"
-                                value={formatNumberWithCommas(cuenta.debe.toString())} // Mostrar el número con comas
+                                value={cuenta.debe} // Mostrar el número con comas
                                 onChange={handleChange}
                                 className="px-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow disabled:cursor-not-allowed disabled:text-gray-400"
                                 disabled={cuenta.naturaleza === "Acreedora"}
@@ -182,9 +188,9 @@ const InfoAsiento = ({
                         <div className="max-w-sm flex items-center gap-2">
                             <label htmlFor="haber">Haber: </label>
                             <input
-                                type="text"
+                                type="number"
                                 name="haber"
-                                value={formatNumberWithCommas(cuenta.haber.toString())} // Mostrar el número con comas
+                                value={cuenta.haber} // Mostrar el número con comas
                                 onChange={handleChange}
                                 className="px-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow disabled:cursor-not-allowed disabled:text-gray-400"
                                 disabled={cuenta.naturaleza === "Deudora"}

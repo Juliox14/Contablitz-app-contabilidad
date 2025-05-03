@@ -4,6 +4,7 @@ export interface CuentaCatalogo {
     codigo: number;
     nombre: string;
     tipo: string;
+    porcentaje_depreciacion_anual?: number;
 }
 
 export interface CuentaAfectada {
@@ -15,7 +16,7 @@ export interface CuentaAfectada {
     tipo: string;
 }
 
-export interface empresa {
+export interface Empresa {
     nombre: string;
     id: number;
 }

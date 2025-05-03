@@ -2,12 +2,10 @@ import { NextRequest } from "next/server";
 import connectionDb from "../../../../../database/config";
 
 export const POST = async (req: NextRequest) => {
-    const { transaccion, detallesCompra, cuentasAfectadas, idEmpresa } = await req.json();
+    const { transaccion, cuentasAfectadas, idEmpresa } = await req.json();
     const sql = await connectionDb();
 
-    console.log("cuentasAfectadas", cuentasAfectadas);
-
-    if (!cuentasAfectadas || !detallesCompra || !transaccion || !idEmpresa) {
+    if (!cuentasAfectadas || !transaccion || !idEmpresa) {
         return new Response(JSON.stringify({ message: "El tipo de asiento y las cuentas son obligatorios" }), { status: 400 });
     }
 

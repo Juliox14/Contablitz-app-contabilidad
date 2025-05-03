@@ -92,7 +92,7 @@ export const RentaAnticipada = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         try {
-            const response = await axios.post("/api/transacciones/registrarCompra", {
+            const response = await axios.post("/api/transacciones/registrarOperacion", {
                 detallesCompra,
                 cuentasAfectadas: [...cuentasAfectadas],
                 transaccion,

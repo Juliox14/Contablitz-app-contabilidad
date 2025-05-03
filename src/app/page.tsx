@@ -33,7 +33,7 @@ export default function Home() {
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/nuevaEmpresa">
             <button className="px-6 py-3 bg-[#52935d] hover:bg-[#4FAB5F] text-white font-semibold rounded-lg transition cursor-pointer">
-              Abrir cuenta
+              Abrir nueva cuenta
             </button>
           </Link>
           <Link href="/asiento_apertura">
@@ -41,6 +41,13 @@ export default function Home() {
               Asiento de apertura
             </button>
           </Link>
+
+          <Link href="/chatbot">
+            <button className="px-6 py-3 bg-gray-700 hover:bg-gray-500 text-white font-semibold rounded-lg transition cursor-pointer">
+              Contablito - Asistente Virtual 🤖
+            </button>
+          </Link>
+
         </div>
       </div>
     </main>

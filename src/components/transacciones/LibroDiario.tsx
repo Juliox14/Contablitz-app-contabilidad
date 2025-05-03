@@ -1,6 +1,7 @@
 import React, { use } from 'react';
 import { formatearNumero } from '@/utils/formateador';
 import Breadcrumb from '../Breadcrumb';
+import ErrorCuentas from './fallbacks/ErrorCuentas';
 
 
 interface MovimientoCuenta {
@@ -25,6 +26,12 @@ interface LibroDiarioProps {
 const LibroDiario = ({cuentasPromise}: LibroDiarioProps) => {
 
     const transacciones = use(cuentasPromise);
+
+    console.log("Transacciones:", transacciones);
+
+    if (!transacciones || transacciones.length === 0) {
+        return <ErrorCuentas />;
+    }
 
     const totalDebe = transacciones.reduce((acc, transaccion) => {
         return acc + transaccion.movimientos_cuentas.reduce((sum, movimiento) => sum + movimiento.debe, 0);

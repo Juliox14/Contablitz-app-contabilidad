@@ -3,7 +3,8 @@ import connectionDb from '../../../../database/config';
 
 export async function GET(req: Request) {
     try {
-
+        const { searchParams } = new URL(req.url);
+        const id_empresa = searchParams.get("id_empresa");
         const sql = await connectionDb();
         const empresas = await sql`
             SELECT 
@@ -27,7 +28,7 @@ JOIN
 JOIN 
     catalogo_cuentas cc ON ec.id_cuenta_cat = cc.id_cuenta_cat
 WHERE 
-    ec.id_empresa = 10 
+    ec.id_empresa = ${id_empresa}
 GROUP BY 
     ec.id_cuenta, cc.nombre
 ORDER BY 

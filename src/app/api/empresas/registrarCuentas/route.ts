@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
             `;
         
             const idEmpresaCuenta = nuevaCuenta.id_cuenta; // ID generado
+            console.log("ID Empresa Cuenta:", idEmpresaCuenta);
         
             await sql`
                 INSERT INTO movimientos_cuentas (id_transaccion, id_cuenta, debe, haber) 

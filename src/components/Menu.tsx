@@ -6,18 +6,19 @@ import TipoAsiento from "./TipoAsiento";
 import ListaEmpresas from "./ListaEmpresas";
 import Link from "next/link";
 import T from "../../public/T.png";
+import DropdownAcciones from "./Dropdown";
 
 
 const Menu = () => {
   return (
-    <div className="bg-[#F5F5F5] flex h-14 p-6 items-center w-full justify-between">
+    <div className="bg-[#F5F5F5] flex p-6 items-center w-full justify-between">
       <div className="flex items-center">
 
         <Link href={"/generar_libro_diario"} className="text-slate-800 hover:text-[#A3C37D] text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-l-lg font-medium px-4 py-2 inline-flex space-x-1 items-center cursor-pointer">
           <span>
             <Image src={libro.src} alt="libro" width={20} height={20} />
           </span>
-          <span className="hidden md:inline-block ml-1">Libro diario</span>
+          <span className="hidden md:inline-block ml-1 text-xs">Libro diario</span>
 
         </Link>
 
@@ -28,7 +29,7 @@ const Menu = () => {
           <span>
             <Image src={T.src} alt="T" width={20} height={20} />
           </span>
-          <span className="hidden md:inline-block ml-1">Esquemas de mayor</span>
+          <span className="hidden md:inline-block ml-1 text-xs">Esquemas de mayor</span>
         </Link>
 
         <Link
@@ -38,14 +39,14 @@ const Menu = () => {
           <span>
             <Image src={documento.src} alt="documento" width={20} height={20} />
           </span>
-          <span className="hidden md:inline-block ml-1">Balance general</span>
+          <span className="hidden md:inline-block ml-1 text-xs">Balance general</span>
         </Link>
 
         <Link href={"/generar_balanza"} className="text-slate-800 hover:text-[#A3C37D] text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-r-lg font-medium px-4 py-2 inline-flex space-x-1 items-center cursor-pointer">
           <span>
             <Image src={balanza.src} alt="balanza" width={20} height={20} />
           </span>
-          <span className="hidden md:inline-block ml-1">Balanza de comprobación</span>
+          <span className="hidden md:inline-block ml-1 text-xs">Balanza de comprobación</span>
         </Link>
 
 
@@ -54,7 +55,10 @@ const Menu = () => {
         <TipoAsiento />
       </div>
 
-      <ListaEmpresas />
+      <div className="flex">
+        <DropdownAcciones />
+        <ListaEmpresas />
+      </div>
 
 
     </div>

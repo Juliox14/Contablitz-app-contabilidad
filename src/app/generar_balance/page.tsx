@@ -1,17 +1,15 @@
 import BalanceGeneral from "@/components/transacciones/BalanceGeneral";
 import { Suspense } from "react";
 import { cookies } from "next/headers";
-import BalanceGeneralFallback from "@/components/fallbacks/BalanceGeneral";
+import BalanceGeneralFallback from "@/components/transacciones/fallbacks/BalanceGeneral";
+import { Empresa } from "@/interfaces/cuenta"; 
 
-interface Empresa {
-    nombre: string;
-    id: number;
-}
+
 
 export default async function GenerarBalance() {
     // Obtén las cookies (no es necesario usar await)
     const cookiesList = cookies() as any;
-    const empresaGuardada = cookiesList.get('empresaSeleccionada')?.value;
+    const empresaGuardada = await cookiesList.get('empresaSeleccionada')?.value;
 
     console.log("Cookie empresaSeleccionada:", empresaGuardada);
 
@@ -28,7 +26,7 @@ export default async function GenerarBalance() {
         return <div>Error: La cookie no tiene un formato válido.</div>;
     }
 
-    const cuentasPromise = fetch(`http://localhost:3000/api/empresas/obtenerCuentas?id_empresa=${empresa.id}`, {
+    const cuentasPromise = await fetch(`http://localhost:3000/api/empresas/obtenerCuentas?id_empresa=${empresa.id}`, {
         method: "GET",  
         headers: {
             "Content-Type": "application/json",
